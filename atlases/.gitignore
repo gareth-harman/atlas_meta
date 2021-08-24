@@ -1,4 +1,4 @@
 *.nii
 *.nii.gz
 *.surf
-atlases/BN_cifti
+atlases/BN_cifti/
