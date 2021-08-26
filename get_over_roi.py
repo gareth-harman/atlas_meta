@@ -57,13 +57,21 @@ for term in ['working_memory', 'inhibitory_control', 'set_shifting', 'reward']:
     # Create a binary version of this
     out_mask_good_bin = np.copy(out_mask_good)
     out_mask_good_bin[out_mask_good_bin <= 0] = 0
+    
+    # Set aside the original good one if we want
+    out_mask_good_orig = np.copy(out_mask_good_bin)
     out_mask_good_bin[out_mask_good_bin > 0] = 1
 
     img_out = atlas_img.new_image_like(out_mask_good)
+
     img_out_bin = atlas_img.new_image_like(out_mask_good_bin)
+    img_out_orig = atlas_img.new_image_like(out_mask_good_orig)
 
     img_out.to_file('good_parcels/' + term + '_parcels.nii.gz')
     img_out_bin.to_file('good_parcels/' + term + '_parcels_bin.nii.gz')
+
+    if term == 'working_memory':
+        img_out_orig.to_file('good_parcels/BN_atlas_WM_good.nii.gz')
 
 with open('atlases/good_parcels.pkl', 'wb') as f:
     pkl.dump(d_good, f) 
